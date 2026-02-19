@@ -109,7 +109,7 @@ jobs:
       env:
         ARCH: "386 amd64"
         OS: "linux windows"
-      run: 'make SIGN=0 VERBOSE=1 VERSION="v999.999.999" build-release build-docker'
+      run: 'make SIGN=0 VERBOSE=1 VERSION="v999.999.999" build-release'
 
   notify:
     needs:
