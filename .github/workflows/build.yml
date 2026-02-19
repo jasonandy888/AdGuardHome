@@ -12,8 +12,6 @@ on:
     - 'v*'
   pull_request:
   workflow_dispatch:
-  star:
-    types: [created]
 
 jobs:
   test:
