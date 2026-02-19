@@ -9,7 +9,7 @@ on:
     branches:
     - '*'
     tags:
-    - 'v*'
+    - '*'          # 任何标签都会触发
   pull_request:
   workflow_dispatch:
 
@@ -65,8 +65,8 @@ jobs:
   release:
     needs: build-release
     runs-on: ubuntu-latest
-    # 仅在推送版本标签时运行
-    if: startsWith(github.ref, 'refs/tags/v')
+    # 仅在推送的是标签时运行（任何标签都会触发）
+    if: github.ref_type == 'tag'
     steps:
       - name: 'Download built artifacts'
         uses: 'actions/download-artifact@v4'
@@ -74,11 +74,16 @@ jobs:
           name: 'AdGuardHome-builds'
           path: './dist'
 
+      # 可选调试：列出待上传的文件
+      - name: 'List files (debug)'
+        run: ls -la ./dist/
+
       - name: 'Create GitHub Release'
         uses: 'softprops/action-gh-release@v2'
         with:
           files: './dist/*'
           draft: false
           prerelease: false
+          generate_release_notes: true   # 自动生成 Release 说明
         env:
           GITHUB_TOKEN: '${{ secrets.GITHUB_TOKEN }}'
