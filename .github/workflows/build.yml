@@ -84,13 +84,3 @@ jobs:
       env:
         GITHUB_TOKEN: '${{ secrets.GITHUB_TOKEN }}'
         SLACK_WEBHOOK_URL: '${{ secrets.SLACK_WEBHOOK_URL }}'
-
-  respond-to-star:
-    if: github.event_name == 'star'
-    runs-on: ubuntu-latest
-    steps:
-      - name: Star received
-        run: |
-          echo "🎉 Thank you for starring the repository!"
-          echo "Stargazer: ${{ github.event.sender.login }}"
-          echo "Total stars: ${{ github.repository.stargazers_count }}"
